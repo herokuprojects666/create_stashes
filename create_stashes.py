@@ -62,15 +62,15 @@ if (unstashed_list):
 
     print 'Success! The following has been stashed :'
 
-    print {0}, ','.join(unstashed_list)
+    print '{ 0 }: ', ', '.join(unstashed_list)
 
     for index, item in enumerate(total_list_of_stashes):
-        print '{', index + 1, '}: ', ','.join(item)
+        print '{', index + 1, '}: ', ', '.join(item)
 else:
     print 'Success! The following has been stashed :'
 
     for index, item in enumerate(total_list_of_stashes):
-        print '{', index, '}: ', ','.join(item)
+        print '{', index, '}: ', ', '.join(item)
 
 """
 #comment in back below this point to check out all the files with a certain name in the file path
