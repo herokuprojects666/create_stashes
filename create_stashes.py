@@ -26,7 +26,7 @@ total_list = list(itertools.chain(new_file_names, modified_file_names))
 extracted_args = vars(results)
 extracted_list = list(extracted_args['file_store'])
 extracted_list.reverse()
-
+stashed_list = []
 
 for file_list in extracted_list:
 
@@ -34,8 +34,11 @@ for file_list in extracted_list:
 
     if new_list:
 
+        stashed_list.push(new_list)
+
         subprocess.Popen(["git", "add", "--all"]).wait()
 
+        """"
         for file in new_list:
             subprocess.Popen(["git", "reset", file]).wait()
 
@@ -46,6 +49,9 @@ for file_list in extracted_list:
         subprocess.Popen(["git", "stash"]).wait()
 
         subprocess.Popen(["git", "reset", "head~"]).wait()
+        """
+
+print stashed_list
 
 
 """
