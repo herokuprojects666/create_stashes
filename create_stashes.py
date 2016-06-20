@@ -26,7 +26,8 @@ total_list = list(itertools.chain(new_file_names, modified_file_names))
 extracted_args = vars(results)
 extracted_list = list(extracted_args['file_store'])
 extracted_list.reverse()
-stashed_list = []
+
+total_list_of_stashes = []
 
 for file_list in extracted_list:
 
@@ -34,11 +35,10 @@ for file_list in extracted_list:
 
     if new_list:
 
-        stashed_list.push(new_list)
+        total_list_of_stashes.insert(0, new_list)
 
         subprocess.Popen(["git", "add", "--all"]).wait()
 
-        """"
         for file in new_list:
             subprocess.Popen(["git", "reset", file]).wait()
 
@@ -49,10 +49,28 @@ for file_list in extracted_list:
         subprocess.Popen(["git", "stash"]).wait()
 
         subprocess.Popen(["git", "reset", "head~"]).wait()
-        """
 
-print stashed_list
+stashed_list = list(itertools.chain(*total_list_of_stashes))
 
+unstashed_list = filter(lambda x : x not in stashed_list, total_list)
+
+subprocess.Popen(["git", "add", "--all"]).wait()
+
+subprocess.Popen(["git", "stash"]).wait()
+
+if (unstashed_list):
+
+    print 'Success! The following has been stashed :'
+
+    print {0}, ','.join(unstashed_list)
+
+    for index, item in enumerate(total_list_of_stashes):
+        print '{', index + 1, '}: ', ','.join(item)
+else:
+    print 'Success! The following has been stashed :'
+
+    for index, item in enumerate(total_list_of_stashes):
+        print '{', index, '}: ', ','.join(item)
 
 """
 #comment in back below this point to check out all the files with a certain name in the file path
