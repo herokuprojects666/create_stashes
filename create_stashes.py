@@ -31,7 +31,7 @@ total_list_of_stashes = []
 
 for file_list in extracted_list:
 
-    new_list = filter(lambda x : filter(lambda y : x.find(y) != -1, file_list), total_list)
+    new_list = filter(lambda x : filter(lambda y : x.lower().find(y.lower()) != -1, file_list), total_list)
 
     if new_list:
 
@@ -58,17 +58,14 @@ subprocess.Popen(["git", "add", "--all"]).wait()
 
 subprocess.Popen(["git", "stash"]).wait()
 
+print 'Success! The following has been stashed :'
+
 if (unstashed_list):
-
-    print 'Success! The following has been stashed :'
-
     print '{ 0 }: ', ', '.join(unstashed_list)
 
     for index, item in enumerate(total_list_of_stashes):
         print '{', index + 1, '}: ', ', '.join(item)
 else:
-    print 'Success! The following has been stashed :'
-
     for index, item in enumerate(total_list_of_stashes):
         print '{', index, '}: ', ', '.join(item)
 
